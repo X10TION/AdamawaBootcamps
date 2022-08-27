@@ -64,6 +64,36 @@ const BootCampSchema= new mongoose.Schema ({
             'Machine Learning',
             'other'
         ]
-
+    },
+    averageRating:{
+        type: Number,
+        min: [1, 'Rating must be atleast one'],
+        max: [10, 'Rating must can not be more than 10']
+    },
+    averageCost: Number,
+    photo: {
+        type: String,
+        default: 'no-photo.jpg'
+    },
+    housing: {
+        type: Boolean,
+        default: false
+    },
+    jobAssistance: {
+        type: Boolean,
+        default:false
+    },
+    jobGuarantee: {
+        type: Boolean,
+        default: false
+    },
+    acceptGi: {
+         type:Boolean,
+         default: false
+    },
+    crearedAt:{
+        type: Date,
+        default: Date.now
     }
 })
+module.exports = mongoose.model('Bootcamp', BootCampSchema)

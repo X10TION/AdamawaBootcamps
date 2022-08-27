@@ -10,7 +10,8 @@ dotenv.config({ path: './config/config.env'})
 //  connection to the DATABASE
 connectDB()
 const app = express()
-
+// body parser
+app.use(express.json())
  // dev middleware
 if(process.env.NODE_ENV === 'develoment'){
     app.use(morgan('dev'))
