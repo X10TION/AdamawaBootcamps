@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const colors = require('colors')
 const connectDB = require('./config/db')
 const morgan = require('morgan')
+const errorHandler = require('./middleware/error')
 //  router files
 const bootcamp = require('./routes/bootcamps')
 // loading the env file
@@ -19,6 +20,8 @@ if(process.env.NODE_ENV === 'develoment'){
 
 // mount the router
 app.use('/api/v1/bootcamp', bootcamp)
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 500
 const server = app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} MODE ON PORT ${PORT}`.yellow.bold))

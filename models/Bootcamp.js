@@ -51,7 +51,7 @@ const BootCampSchema= new mongoose.Schema ({
         zipcode: String,
         country:String
     },
-    carrers:{
+    careers:{
         // array of string here
         type: [String],
         require: true,
