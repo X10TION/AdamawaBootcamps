@@ -1,9 +1,13 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
+const geocoder = require('../utils/goecoder')
+
+
 
 const BootCampSchema= new mongoose.Schema ({
     name: {
         type:String,
-        require: [true, 'please Add a bootcamps'],
+        required: [true, 'please Add a bootcamps'],
         unique: [true, 'Name is requireed'],
         trim: true,
         maxlength:[50, 'Name can not be more than 50 characters']
@@ -11,7 +15,7 @@ const BootCampSchema= new mongoose.Schema ({
     slug:String,
     description:{
         type:String,
-        require: [true, 'please Add a Description'],
+        required: [true, 'please Add a Description'],
         maxlength:[50, 'Name can not be more than 50 characters']
     },
     website:{
@@ -36,11 +40,11 @@ const BootCampSchema= new mongoose.Schema ({
         type:{
             type:String,
             enum:['point'],
-            require: true
+            // required: true
         },
         coordinates:{
             type:[Number],
-            require: true,
+            // required: true,
             index: '2dsphere'
 
         },
@@ -54,7 +58,7 @@ const BootCampSchema= new mongoose.Schema ({
     careers:{
         // array of string here
         type: [String],
-        require: true,
+        required: true,
         enum:[
             'Web Develoment',
             'Mobile Development',
@@ -95,5 +99,31 @@ const BootCampSchema= new mongoose.Schema ({
         type: Date,
         default: Date.now
     }
+})
+
+
+// middleware 
+BootCampSchema.pre('save', function(next){
+    // console.log('slugify ran', this.name)
+    this.slug = slugify(this.name, {lower: true})
+    next()
+})
+
+//  GEOCODE CREATE LOCATION FIELE
+BootCampSchema.pre('save', async function(next){
+    const locationGEO= await geocoder.geocode(this.address)
+    this.location = {
+        type: "point",
+        coordinates:[locationGEO[0].longitude,locationGEO[0].latitude],
+        formattedAddress: locationGEO[0].formattedAddress,
+        street: locationGEO[0].streetName,
+        city: locationGEO[0].city,
+        state: locationGEO[0].stateCode,
+        zipcode: locationGEO[0].zipcode,
+        country: locationGEO[0].countryCode
+    }
+    // do not save addresss
+    this.address = undefined
+next()
 })
 module.exports = mongoose.model('Bootcamp', BootCampSchema)
