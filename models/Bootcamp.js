@@ -111,7 +111,8 @@ BootCampSchema.pre('save', function(next){
 
 //  GEOCODE CREATE LOCATION FIELE
 BootCampSchema.pre('save', async function(next){
-    const locationGEO= await geocoder.geocode(this.address)
+    // const locationGEO= await
+     geocoder.on(this.address)
     this.location = {
         type: "point",
         coordinates:[locationGEO[0].longitude,locationGEO[0].latitude],
