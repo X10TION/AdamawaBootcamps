@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const errorHandler = require('./middleware/error')
 //  router files
 const bootcamp = require('./routes/bootcamps')
+const courses = require('./routes/courses')
 // loading the env file
 dotenv.config({ path: './config/config.env'})
 //  connection to the DATABASE
@@ -20,6 +21,7 @@ if(process.env.NODE_ENV === 'develoment'){
 
 // mount the router
 app.use('/api/v1/bootcamp', bootcamp)
+app.use('/api/v1/courses', courses )
 
 app.use(errorHandler)
 

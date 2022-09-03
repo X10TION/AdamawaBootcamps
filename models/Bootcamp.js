@@ -95,7 +95,7 @@ const BootCampSchema= new mongoose.Schema ({
          type:Boolean,
          default: false
     },
-    crearedAt:{
+    createdAt:{
         type: Date,
         default: Date.now
     }

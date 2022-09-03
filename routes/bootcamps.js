@@ -5,7 +5,10 @@ const {getBootCamps,
     createBootCamps,
     updateBootCamps,
     deleteBootCamps} = require('../controllers/bootcamps')
-//  creating router
+// INCLUDE OTHER RESOURCE ROTER 
+const corseRouter = require('./courses')
+router.use('/:bootcampId/courses', corseRouter)
+    //  creating router
 router.route('/')
 .get(getBootCamps)
 .post(createBootCamps)
