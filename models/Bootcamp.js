@@ -99,7 +99,11 @@ const BootCampSchema= new mongoose.Schema ({
         type: Date,
         default: Date.now
     }
-})
+},{
+    toJSON: { virtuals: true},
+    toObject: { virtuals: true}
+}
+)
 
 
 // middleware 
@@ -127,4 +131,17 @@ BootCampSchema.pre('save', function(next){
 //     this.address = undefined
 // next()
 // })
+//  cascade delte course when bootcamp been deleted
+BootCampSchema.pre('remove', async function(next){
+    console.log("courses remove from bbotcamp")
+    await this.model('Course').deleteMany({bootcamp: this._id})
+    next()
+})
+// reverse poplat with virtual
+BootCampSchema.virtual('courses',{
+    ref: "Course",
+    localField: '_id',
+    foreignField: 'bootcamp',
+    justOne:false
+})
 module.exports = mongoose.model('Bootcamp', BootCampSchema)
