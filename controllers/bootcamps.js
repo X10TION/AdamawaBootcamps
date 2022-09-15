@@ -127,3 +127,25 @@
           name: "bootcamp Successfully terminated"
          })
   })
+
+  // @desc   put new bootcamps 
+  // @rote    put /api/v1/boostcamps/:id/photo
+  // @access  Private
+  exports.bootCampPhotoUpload = asyncHandler(async (req, res, next) => {
+    const bootcamp = await Bootcamp.findById(req.params.id)
+    if(!bootcamp){
+        return  next(
+            new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+            )
+    }
+    if(!req.files){
+        return  next(new ErrorResponse(`Please Upload files - `, 404))
+    }
+    // console.log(req.files.files)
+    const file = req.files.files;
+    //  make sure it is photo
+    if(!file.mimetype.startsWith('image')){
+        return next( new ErrorResponse('Please Uplaod an image file', 400))
+    }
+
+})

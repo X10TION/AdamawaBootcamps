@@ -4,6 +4,7 @@ const colors = require('colors')
 const connectDB = require('./config/db')
 const morgan = require('morgan')
 const errorHandler = require('./middleware/error')
+const fileUpload = require('express-fileupload')
 //  router files
 const bootcamp = require('./routes/bootcamps')
 const courses = require('./routes/courses')
@@ -18,6 +19,8 @@ app.use(express.json())
 if(process.env.NODE_ENV === 'develoment'){
     app.use(morgan('dev'))
 }
+//  file uploaad 
+app.use(fileUpload())
 
 // mount the router
 app.use('/api/v1/bootcamp', bootcamp)
