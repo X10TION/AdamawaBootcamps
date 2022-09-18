@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const path = require('path')
 const colors = require('colors')
 const connectDB = require('./config/db')
 const morgan = require('morgan')
@@ -21,6 +22,8 @@ if(process.env.NODE_ENV === 'develoment'){
 }
 //  file uploaad 
 app.use(fileUpload())
+//  set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 // mount the router
 app.use('/api/v1/bootcamp', bootcamp)
