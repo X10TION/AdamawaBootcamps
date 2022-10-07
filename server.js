@@ -14,6 +14,7 @@ dotenv.config({ path: './config/config.env'})
 //  connection to the DATABASE
 connectDB()
 const app = express()
+// for rendering
 // body parser
 app.use(express.json())
  // dev middleware
