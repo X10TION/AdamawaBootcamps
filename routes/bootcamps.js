@@ -17,7 +17,7 @@ router.route('/')
 .post(createBootCamps)
 
 router.route('/:id/photo').put(bootCampPhotoUpload)
-
+// Routing id 
 router.route('/:id')
     .get(singleBootCamps)
     .put(updateBootCamps)
